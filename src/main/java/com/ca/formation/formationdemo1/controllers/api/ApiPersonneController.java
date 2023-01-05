@@ -1,5 +1,5 @@
 package com.ca.formation.formationdemo1.controllers.api;
-
+import com.ca.formation.formationdemo1.DTO.PersonneTDO;
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.models.Role;
@@ -37,7 +37,7 @@ public class ApiPersonneController {
         return "Bonjour tout le monde";
     }
 
-    @PreAuthorize("hasAuthority('"+ Role.ADMIN+"')")
+    @PreAuthorize("hasAuthority('"+ Role.READ+"')")
     @GetMapping("/bye")
     public  String byebye(){
         return "Bye bye";
@@ -60,14 +60,15 @@ public class ApiPersonneController {
     }
 
     @PostMapping
-    public ResponseEntity<Personne> addPersonne(@RequestBody Personne personne){
+    public ResponseEntity<Personne> addPersonne(@RequestBody PersonneTDO personneTDO){
+        Personne personne=new Personne();
         Personne personneResponse = personneService.addPersonne(personne);
         return ResponseEntity.ok().body(personneResponse);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id, @RequestBody Personne personneRequest ) throws Exception {
-
+    public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id, @RequestBody PersonneTDO personneTDO ) throws Exception {
+        Personne  personneRequest=new Personne();
         Personne personne = personneService.updatePersonne(id, personneRequest);
 
         return ResponseEntity.ok().body(personne);

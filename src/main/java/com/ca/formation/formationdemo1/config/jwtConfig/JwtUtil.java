@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class JwtUtil {
 
     // mettre le jwtSecret= "Base-64"
-    private final String jwtSecret="TWV0dHJlIG1vbiB0b2tlbiBlbiBiYXNlIDY0IA==";
+    private static  final String jwtSecret="TWV0dHJlIG1vbiB0b2tlbiBlbiBiYXNlIDY0IA==";
 
     // generer JWT
 

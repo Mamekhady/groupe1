@@ -1,6 +1,6 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
-
+import com.ca.formation.formationdemo1.DTO.UtilisateurDTO;
 import com.ca.formation.formationdemo1.config.jwtConfig.JwtUtil;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
@@ -26,9 +26,10 @@ public class UtilisateurController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur utilisateurRequest){
+    public ResponseEntity<Utilisateur> login(@RequestBody UtilisateurDTO utilisateurDTO){
         try{
-            Utilisateur utilisateur = utilisateurService.login(utilisateurRequest);
+           // Utilisateur utilisateurRequest=new Utilisateur();
+            Utilisateur utilisateur = utilisateurService.login(utilisateurDTO);
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, jwtUtil.generateAccesToken(utilisateur))
@@ -41,7 +42,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Utilisateur> registration(@RequestBody Utilisateur utilisateurRequest){
+    public ResponseEntity<Utilisateur> registration(@RequestBody UtilisateurDTO utilisateurRequest){
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
