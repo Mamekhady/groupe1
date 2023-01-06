@@ -23,6 +23,7 @@ pipeline{
                  }
 
             }
+            }
             post{
                 aborted{
                     echo 'Sending message to to Agent'
@@ -36,6 +37,6 @@ pipeline{
             }
 
 
-        }
+        
 
 }
