@@ -1,9 +1,7 @@
 package com.ca.formation.formationdemo1.config;
-import com.ca.formation.formationdemo1.ProjetSIRApplication;
-import com.ca.formation.formationdemo1.config.jwtConfig.JwtFilter;
+import com.ca.formation.formationdemo1.config.jwtconfig.JwtFilter;
 import com.ca.formation.formationdemo1.repositories.UtilisateurRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -22,16 +20,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.logging.Logger;
+
 import static java.lang.String.format;
 
-@Deprecated(forRemoval=true)
+
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
         jsr250Enabled = true,
         prePostEnabled = true
 )
+@Deprecated(forRemoval=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final Logger logger =  LogManager.getLogger( ProjetSIRApplication.class );
     private final UtilisateurRepository utilisateurRepository;
     private final JwtFilter jwtFilter;
 
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String apiDocPath;
     @Value("${springdoc.swagger-ui.path}")
     private String swaggerPath;
-    @Deprecated
+
     public SecurityConfig(UtilisateurRepository utilisateurRepository, JwtFilter jwtFilter) {
         super();
 
@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                         .authenticationEntryPoint(
                                 ((request, response, authException) -> {
-                                    logger.info("Demande pas autoriser - "+authException.getMessage());
+                                    Logger.getLogger("Demande pas autoriser - "+authException.getMessage());
                                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                                 })
                         )

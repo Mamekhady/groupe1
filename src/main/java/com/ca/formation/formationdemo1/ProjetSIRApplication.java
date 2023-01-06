@@ -1,8 +1,7 @@
 package com.ca.formation.formationdemo1;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class ProjetSIRApplication {
-  private static final Logger logger =  LogManager.getLogger( ProjetSIRApplication.class );
+
 
   @Value("${mon.application.travail}")
   String monApplication;
@@ -33,8 +32,8 @@ public class ProjetSIRApplication {
 
   @Bean
   public void addBean() {
-    logger.info(monApplication);
-    logger.info(" Démarrage application Spring Boot");
+   Logger.getLogger(monApplication);
+    Logger.getLogger(" Démarrage application Spring Boot");
   }
 
   @Bean
@@ -48,7 +47,10 @@ public class ProjetSIRApplication {
 
       List<Personne> personneList = repository.findByNomAndPrenom("Abdel", "Moussa");
 
-      personneList.stream().forEach(System.out::println);
+      for (Personne p:personneList
+      ) {
+        Logger.getLogger(p.getNom()+" "+p.getPrenom());
+      }
 
     };
   }

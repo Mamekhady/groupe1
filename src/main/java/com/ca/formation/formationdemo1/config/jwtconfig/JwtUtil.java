@@ -1,8 +1,8 @@
-package com.ca.formation.formationdemo1.config.jwtConfig;
-
+package com.ca.formation.formationdemo1.config.jwtconfig;
 
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import io.jsonwebtoken.*;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
+
 
     // mettre le jwtSecret= "Base-64"
     @Value("${mamekhady.key.jwtSecret}")
@@ -71,15 +72,15 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(jwtsecret).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex){
-            System.out.println("Invalide Signature Jwt - "+ex.getMessage());
+            Logger.getLogger("Invalide Signature Jwt - " + ex.getMessage());
         } catch (ExpiredJwtException ex){
-            System.out.println("Expiration du Jwt - "+ex.getMessage());
+            Logger.getLogger("Expiration du Jwt - "+ex.getMessage());
         }catch (UnsupportedJwtException ex){
-            System.out.println("Token jwt non supporté - "+ex.getMessage());
+            Logger.getLogger("Token jwt non supporté - "+ex.getMessage());
         }catch (IllegalArgumentException ex){
-            System.out.println("Invalide claims Jwt - "+ex.getMessage());
+            Logger.getLogger("Invalide claims Jwt - "+ex.getMessage());
         }catch (MalformedJwtException ex){
-            System.out.println("Token jwt mal formatter - "+ex.getMessage());
+            Logger.getLogger("Token jwt mal formatter - "+ex.getMessage());
         }
 
         return false;
