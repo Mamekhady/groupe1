@@ -14,5 +14,28 @@ pipeline{
                     sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install'
                 }
             }
+            stage('Build'){
+                 input{
+                        message 'Do you wanted to proceed for Deployement'
+                 }
+                 steps{
+                    sh 'echo "Deploying into Server"'
+                 }
+
+            }
+            post{
+                aborted{
+                    echo 'Sending message to to Agent'
+                }
+                failure{
+                    echo 'Sending message to to Agent'
+                }
+                success{
+                    echo 'Sending message to to Agent'
+                }
+            }
+
+
         }
+
 }
