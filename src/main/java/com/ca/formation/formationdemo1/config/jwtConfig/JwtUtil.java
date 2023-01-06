@@ -3,6 +3,7 @@ package com.ca.formation.formationdemo1.config.jwtConfig;
 
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,9 @@ import java.util.stream.Collectors;
 public class JwtUtil {
 
     // mettre le jwtSecret= "Base-64"
-    private static  final String jwtSecret="TWV0dHJlIG1vbiB0b2tlbiBlbiBiYXNlIDY0IA==";
+    @Value("${mamekhady.key.jwtSecret}")
+    private String jwtsecret;
+
 
     // generer JWT
 
@@ -26,7 +29,7 @@ public class JwtUtil {
                 .setIssuer("formation.ca")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 *1000))// 1 jour
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtsecret)
                 .compact();
     }
 
@@ -37,7 +40,7 @@ public class JwtUtil {
                 .setIssuer("formation.ca")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 *1000))// 1 semaine
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtsecret)
                 .compact();
     }
 
@@ -51,7 +54,7 @@ public class JwtUtil {
     // Recuperer les claims
     private Claims getClaims(String token){
         return Jwts.parser()
-                .setSigningKey(jwtSecret)
+                .setSigningKey(jwtsecret)
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -65,7 +68,7 @@ public class JwtUtil {
     // Verifier la validité du token
     public boolean validate(String token){
         try{
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(jwtsecret).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex){
             System.out.println("Invalide Signature Jwt - "+ex.getMessage());

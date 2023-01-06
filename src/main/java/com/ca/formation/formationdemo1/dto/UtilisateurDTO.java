@@ -1,4 +1,4 @@
-package com.ca.formation.formationdemo1.DTO;
+package com.ca.formation.formationdemo1.dto;
 
 import com.ca.formation.formationdemo1.models.Role;
 

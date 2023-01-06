@@ -1,10 +1,8 @@
 package com.ca.formation.formationdemo1.repositories;
 
-import com.ca.formation.formationdemo1.DTO.PersonneTDO;
 import com.ca.formation.formationdemo1.models.Personne;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

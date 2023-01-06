@@ -1,6 +1,6 @@
 package com.ca.formation.formationdemo1.controllers;
 
-import com.ca.formation.formationdemo1.DTO.PersonneTDO;
+import com.ca.formation.formationdemo1.dto.PersonneTDO;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
 import org.springframework.stereotype.Controller;

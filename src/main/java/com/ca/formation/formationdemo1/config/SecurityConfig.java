@@ -1,7 +1,9 @@
 package com.ca.formation.formationdemo1.config;
-
+import com.ca.formation.formationdemo1.ProjetSIRApplication;
 import com.ca.formation.formationdemo1.config.jwtConfig.JwtFilter;
 import com.ca.formation.formationdemo1.repositories.UtilisateurRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -9,14 +11,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -24,14 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import static java.lang.String.format;
 
-@EnableWebSecurity
+@Deprecated(forRemoval=true)
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
         jsr250Enabled = true,
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    private static final Logger logger =  LogManager.getLogger( ProjetSIRApplication.class );
     private final UtilisateurRepository utilisateurRepository;
     private final JwtFilter jwtFilter;
 
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String apiDocPath;
     @Value("${springdoc.swagger-ui.path}")
     private String swaggerPath;
-
+    @Deprecated
     public SecurityConfig(UtilisateurRepository utilisateurRepository, JwtFilter jwtFilter) {
         super();
 
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
-
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(username -> utilisateurRepository
@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                         .authenticationEntryPoint(
                                 ((request, response, authException) -> {
-                                    System.out.println("Demande pas autoriser - "+authException.getMessage());
+                                    logger.info("Demande pas autoriser - "+authException.getMessage());
                                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                                 })
                         )
@@ -104,6 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Exposer le bean du authentication manager
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }

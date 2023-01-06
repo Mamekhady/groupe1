@@ -1,7 +1,8 @@
 package com.ca.formation.formationdemo1;
-
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -9,13 +10,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.util.List;
 
 @SpringBootApplication
 public class ProjetSIRApplication {
+  private static final Logger logger =  LogManager.getLogger( ProjetSIRApplication.class );
 
   @Value("${mon.application.travail}")
   String monApplication;
@@ -32,13 +33,13 @@ public class ProjetSIRApplication {
 
   @Bean
   public void addBean() {
-    System.out.println(monApplication);
-    System.out.println(" Démarrage application Spring Boot");
+    logger.info(monApplication);
+    logger.info(" Démarrage application Spring Boot");
   }
 
   @Bean
   public CommandLineRunner demo(PersonneRepository repository) {
-    return (args -> {
+    return args -> {
       Personne personne1 = repository.save(new Personne("Lacroix", "Jean", 20));
       repository.save(new Personne("Beau", "Michel", 30));
       repository.save(new Personne("Abdel", "Moussa", 40));
@@ -49,7 +50,7 @@ public class ProjetSIRApplication {
 
       personneList.stream().forEach(System.out::println);
 
-    });
+    };
   }
 
   @Bean

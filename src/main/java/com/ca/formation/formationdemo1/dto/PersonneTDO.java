@@ -1,6 +1,4 @@
-package com.ca.formation.formationdemo1.DTO;
-
-import javax.persistence.Column;
+package com.ca.formation.formationdemo1.dto;
 
 public class PersonneTDO {
     private Long id;
