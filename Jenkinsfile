@@ -21,22 +21,17 @@ pipeline{
                  steps{
                     sh 'echo "Deploying into Server"'
                  }
-
             }
-            }
-            post{
-                aborted{
-                    echo 'Sending message to to Agent'
-                }
-                failure{
-                    echo 'Sending message to to Agent'
-                }
-                success{
-                    echo 'Sending message to to Agent'
-                }
-            }
-
-
-        
-
-}
+        }
+         post{
+              aborted{
+                   echo 'Sending message to to Agent'
+              }
+              failure{
+                   echo 'Sending message to to Agent'
+              }
+               success{
+                  echo 'Sending message to to Agent'
+               }
+         }
+    }
