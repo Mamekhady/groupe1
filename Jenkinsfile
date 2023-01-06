@@ -15,7 +15,10 @@ pipeline{
                 }
             }
             stage('SonarQube Analyst '){
-                sh 'mvn sonar:sonar'
+                steps{
+                    sh 'mvn sonar:sonar'
+                }
+
             }
             stage('Approve Deployment'){
                  input{
