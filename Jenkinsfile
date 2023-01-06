@@ -9,10 +9,13 @@ pipeline{
                     git branch: 'main', url: 'https://github.com/Mamekhady/groupe1.git'
                 }
             }
-            stage('SonarQube Analyst '){
+            stage('Build '){
                 steps{
                     sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install'
                 }
+            }
+            stage('SonarQube Analyst '){
+                sh 'mvn sonar:sonar'
             }
             stage('Approve Deployment'){
                  input{
